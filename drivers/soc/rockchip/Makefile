@@ -5,3 +5,4 @@
 obj-$(CONFIG_ROCKCHIP_GRF) += grf.o
 obj-$(CONFIG_ROCKCHIP_IODOMAIN) += io-domain.o
 obj-$(CONFIG_ROCKCHIP_DTPM) += dtpm.o
+obj-$(CONFIG_ROCKCHIP_DDR_INTERLEAVE) += rk3588-ddr-interleave.o

@@ -1,0 +1,91 @@
+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+%YAML 1.2
+---
+$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+
+title: Rockchip RK3588 DDR interleave layout
+
+maintainers:
+  - name: Rockchip SoC maintainers
+    email: linux-rockchip@lists.infradead.org
+
+description:
+  Describes DDR interleave regions that can be hotplugged and bound to
+  distinct NUMA nodes on RK3588 platforms.
+
+properties:
+  compatible:
+    const: rockchip,rk3588-ddr-interleave
+
+  "#address-cells":
+    const: 2
+
+  "#size-cells":
+    const: 2
+
+patternProperties:
+  "^region@[0-9a-f]+$":
+    type: object
+    additionalProperties: false
+    properties:
+      reg:
+        maxItems: 1
+        description:
+          Base address and size of the interleave region.
+
+      numa-node-id:
+        $ref: /schemas/types.yaml#/definitions/uint32
+        description:
+          NUMA node id to associate with this interleave region.
+
+      rockchip,interleave-mode:
+        enum:
+          - "4ch"
+          - "2ch"
+          - "none"
+        description:
+          DDR channel interleave mode to apply when this region is active.
+
+      rockchip,boot-region:
+        type: boolean
+        description:
+          Marks the region that contains boot memory and cannot be removed.
+
+    required:
+      - reg
+      - numa-node-id
+      - rockchip,interleave-mode
+
+required:
+  - compatible
+  - "#address-cells"
+  - "#size-cells"
+
+additionalProperties: false
+
+examples:
+  - |
+    ddr-interleave {
+        compatible = "rockchip,rk3588-ddr-interleave";
+        #address-cells = <2>;
+        #size-cells = <2>;
+
+        region@0 {
+            reg = <0x0 0x00000000 0x4 0x00000000>;
+            numa-node-id = <0>;
+            rockchip,interleave-mode = "4ch";
+            rockchip,boot-region;
+        };
+
+        region@400000000 {
+            reg = <0x4 0x00000000 0x4 0x00000000>;
+            numa-node-id = <1>;
+            rockchip,interleave-mode = "2ch";
+        };
+
+        region@800000000 {
+            reg = <0x8 0x00000000 0x4 0x00000000>;
+            numa-node-id = <2>;
+            rockchip,interleave-mode = "none";
+        };
+    };

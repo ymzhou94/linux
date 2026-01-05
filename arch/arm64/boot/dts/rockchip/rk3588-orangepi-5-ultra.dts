@@ -12,6 +12,50 @@
 	model = "Xunlong Orange Pi 5 Ultra";
 	compatible = "xunlong,orangepi-5-ultra", "rockchip,rk3588";
 
+	memory@0 {
+		device_type = "memory";
+		reg = <0x0 0x00000000 0x4 0x00000000>;
+		numa-node-id = <0>;
+	};
+
+	memory@400000000 {
+		device_type = "memory";
+		reg = <0x4 0x00000000 0x4 0x00000000>;
+		numa-node-id = <1>;
+		status = "disabled";
+	};
+
+	memory@800000000 {
+		device_type = "memory";
+		reg = <0x8 0x00000000 0x4 0x00000000>;
+		numa-node-id = <2>;
+		status = "disabled";
+	};
+
+	ddr-interleave {
+		compatible = "rockchip,rk3588-ddr-interleave";
+		#address-cells = <2>;
+		#size-cells = <2>;
+
+		region@0 {
+			reg = <0x0 0x00000000 0x4 0x00000000>;
+			numa-node-id = <0>;
+			rockchip,interleave-mode = "4ch";
+		};
+
+		region@400000000 {
+			reg = <0x4 0x00000000 0x4 0x00000000>;
+			numa-node-id = <1>;
+			rockchip,interleave-mode = "2ch";
+		};
+
+		region@800000000 {
+			reg = <0x8 0x00000000 0x4 0x00000000>;
+			numa-node-id = <2>;
+			rockchip,interleave-mode = "none";
+		};
+	};
+
 	hdmi1-con {
 		compatible = "hdmi-connector";
 		type = "a";

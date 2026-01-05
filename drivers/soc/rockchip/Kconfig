@@ -30,4 +30,11 @@ config ROCKCHIP_DTPM
 	  on this platform. That will create all the power capping capable
 	  devices.
 
+config ROCKCHIP_DDR_INTERLEAVE
+	tristate "Rockchip RK3588 DDR interleave control"
+	depends on OF && NUMA && MEMORY_HOTPLUG
+	help
+	  Enable the RK3588 DDR interleave controller driver, which coordinates
+	  NUMA-backed memory hotplug regions for switching DDR interleave modes.
+
 endif
