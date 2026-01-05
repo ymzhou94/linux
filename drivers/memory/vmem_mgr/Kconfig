@@ -1,0 +1,9 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+config VMEM_VIEW_MANAGER
+	tristate "VMEM view manager (scaffold)"
+	depends on ARM64 || COMPILE_TEST
+	help
+	  Scaffold implementation for the LPDDR6 V-Topology view manager.
+	  This provides the module layout and entry points for NUMA setup,
+	  hotplug integration, and reorder engine wiring.

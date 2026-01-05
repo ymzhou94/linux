@@ -242,7 +242,16 @@ config STM32_OMM
 	    - chip select selection override.
 	    - the time between 2 transactions in multiplexed mode.
 
+config LPDDR6_VTOPOLOGY
+	tristate "LPDDR6 V-Topology Manager (prototype)"
+	depends on ARM64 || COMPILE_TEST
+	help
+	  Prototype driver for software-defined LPDDR6 alias view switching
+	  with 128MB block management. Exposes sysfs controls under
+	  /sys/bus/vmem for view selection and block state introspection.
+
 source "drivers/memory/samsung/Kconfig"
 source "drivers/memory/tegra/Kconfig"
+source "drivers/memory/vmem_mgr/Kconfig"
 
 endif
